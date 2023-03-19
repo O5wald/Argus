@@ -14,14 +14,17 @@ pip install -r requirements.txt
 ## Usage
 - **For Linux**
   ```bash
+  cd src
   sudo python3 Argus.py
   ```
 - **For Windows**
   ```bash
+  cd src
   python3 Argus.py
   ```
   or
   ```
+  cd src
   python Argus.py
   ```
 After Executing Above command you have to Enter your IP address Range with **CIDR** Notation so that Argus will scan all the Network Including Subnets.
