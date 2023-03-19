@@ -4,9 +4,8 @@ from scapy.all import *
 from scapy.layers import http
 import sys
 import os
-import fcntl
 import socket
-import struct
+from getmac import get_mac_address
 
 """
 Author : O5wald (Aryan Kapse)
@@ -35,14 +34,21 @@ unsecure_p = (80,21)
 external = []
 # Enable IP forwarding
 
+iface_names = []
 
-def getHwAddr(ifname):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    info = fcntl.ioctl(s.fileno(), 0x8927,  struct.pack('256s', bytes(ifname, 'utf-8')[:15]))
-    return ':'.join('%02x' % b for b in info[18:24])
+def iface_select():
+    names = socket.if_nameindex()
+    iface_names = []
+    for i in range(len(names)):
+        iface_names.append(names[i][1])
+    for t in range(len(iface_names)):
+        print(f"{t+1})",iface_names[t])
+    select = int(input(Fore.BLUE+"\nSelect Network Interface : "+Style.RESET_ALL))
+    int_face = iface_names[select-1]
+    return int_face
 
-
-your_mac = getHwAddr('wlx3460f9f541aa')
+iface = iface_select()
+your_mac = get_mac_address(interface=iface)
 
 def _enable_linux_iproute():
     """
@@ -156,20 +162,8 @@ def spoof_user(host,gateway):
         send(arp_pkt,verbose=0)
         time.sleep(3)
 
-iface_names = []
-def iface_select():
-    names = socket.if_nameindex()
-    iface_names = []
-    for i in range(len(names)):
-        iface_names.append(names[i][1])
-    for t in range(len(iface_names)):
-        print(f"{t+1})",iface_names[t])
-    select = int(input(Fore.BLUE+"\nSelect Network Interface : "+Style.RESET_ALL))
-    int_face = iface_names[select-1]
-    return int_face
 
 try:
-    iface = iface_select()
     while True:
         # print("\n")
         sub = input(Fore.YELLOW+"Enter your IP in CIDR notation (Example : 192.168.1.0/24 or 192.168.256.0/24): "+Style.RESET_ALL)
