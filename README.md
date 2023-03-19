@@ -5,7 +5,7 @@
 # Argus
 Argus is OpenSource Network Monitoring Tool which collects Incomming and Outgoing data from Specific Device. If any malicious Activities is Comming or Going outside the network it will alert it.
 
-## Installation
+## Installation (For Windows Run Terminal as Administrator and For Linux Run as Root)
 ```bash
 git clone https://github.com/O5wald/Argus.git
 cd Argus
@@ -17,7 +17,7 @@ pip install -r requirements.txt
   cd src
   sudo python3 Argus.py
   ```
-- **For Windows**
+- **For Windows** (Run Terminal as Administrator)
   ```bash
   cd src
   python3 Argus.py
